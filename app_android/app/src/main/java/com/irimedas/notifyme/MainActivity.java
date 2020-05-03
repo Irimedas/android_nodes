@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 import com.irimedas.notifyme.firebase.Auth;
-import com.irimedas.notifyme.models.User;
+import com.irimedas.notifyme.models.Users;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,10 +51,13 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this,"name: "+name+"\nEmail: "+email+"\nuid: "+uid,Toast.LENGTH_LONG).show();
             //test db
-                User testUser = new User(uid,name,email);
-                testUser.save();
+                //Users testUser = new Users(uid,name,email);
+                //testUser.save();
+               Users test = new Users();
+               test.find(uid);
 
-                Toast.makeText(this,"TABLE: "+testUser.getTABLE(),Toast.LENGTH_LONG).show();
+
+                //Toast.makeText(this,"TABLE: "+test.getModel().getEmail(),Toast.LENGTH_LONG).show();
                /* User usuario = new User();
                 ArrayList<User> users = usuario.all();
                 String sendUsers;
