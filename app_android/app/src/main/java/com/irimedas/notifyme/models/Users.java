@@ -1,24 +1,34 @@
 package com.irimedas.notifyme.models;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import com.irimedas.notifyme.MainActivity;
 import com.irimedas.notifyme.firebase.Database;
-import com.irimedas.notifyme.interfaces.models;
 
-import java.lang.annotation.Documented;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Users extends Database  {
     //atribute
+
+    private static String TABLE = "Users";
+    private Query query;
+
     private String id;
     private String name;
     private String email;
@@ -27,13 +37,10 @@ public class Users extends Database  {
     private List<String> user_notes;
     private List<String> share_notes;
 
-    private static String TABLE = "Users";
-    private static DocumentReference idRef;
-    private static DocumentSnapshot document;
-    private static Users model;
 
     public Users(){
         super();
+
     };
 
     public Users(String id, String name, String email) {
@@ -46,55 +53,113 @@ public class Users extends Database  {
         this.share_notes = null;
         this.user_notes = null;
     }
-    public Users(Users model){
-        super();
-        this.id = model.getId();
-        this.name = model.getName();
-        this.email = model.getEmail();
-        this.role = model.getRole();
-        this.token = model.getToken();
-        this.share_notes = model.getShare_notes();
-        this.user_notes = model.getUser_notes();
+
+    public void find(String id) {
+
+        where("id","=",id);
+    }
+
+    public void where(String field, String condition, String value) {
+        CollectionReference collectionReference = db.collection(TABLE);
+
+        switch (condition) {
+            case "=":
+                query = collectionReference.whereEqualTo(field, value);
+                break;
+            case ">":
+                query = collectionReference.whereGreaterThan(field, value);
+                break;
+            case ">=":
+                query = collectionReference.whereGreaterThanOrEqualTo(field, value);
+                break;
+            case "<":
+                query = collectionReference.whereLessThan(field, value);
+                break;
+            case "<=":
+                query = collectionReference.whereLessThanOrEqualTo(field, value);
+                break;
+            case "in":
+                query = collectionReference.whereArrayContains(field, value);
+                break;
+            default:
+                query = null;
+                break;
+        }
+        //Executa la query
+        this.get();
+    }
+    public void get(){
+        query.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Users result = document.toObject(Users.class);
+                                result.show();
+                                Log.d("test", document.getId() + " => " + document.getData());
+
+                                //guardar el documenten en un arraylist  de QueryDocumentSnapshot
+                                //passar el arraylist al adapters corresponent
+                            }
+                        } else {
+                            Log.d("test", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
     }
 
 
-    public void find(String id) {
-        idRef = db.collection(TABLE).document(id);
-        idRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+    public void save(){
+        db.collection(TABLE).document(id).set(this);
+    }
+    public void update( String id, Map<String,Object> data){
+        db.collection(TABLE).document(id).update(data);
+    }
+    public void remove(){
+        db.collection(TABLE).document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    document = task.getResult();
-                    if (document.exists()) {
-                       // Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        Users test = new Users(document.toObject(Users.class));
-                        Toast.makeText(MainActivity.context,"DocumentSnapshot data: "+document.getData(),Toast.LENGTH_LONG).show();
-                        Toast.makeText(MainActivity.context,"Users: "+test.getEmail(),Toast.LENGTH_LONG).show();
-                    } else {
-                        //Log.d(TAG, "No such document");
-                        Toast.makeText(MainActivity.context,"No such document",Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    //Log.d(TAG, "get failed with ", task.getException());
-                    Toast.makeText(MainActivity.context,"get failed with ",Toast.LENGTH_LONG).show();
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(MainActivity.context,"User delete",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(MainActivity.context,"User delete Fail",Toast.LENGTH_LONG).show();
                 }
             }
         });
-        //Users result =document.toObject(Users.class);
-        ///Toast.makeText(MainActivity.context,"Users: "+result.getEmail(),Toast.LENGTH_LONG).show();
     }
 
+    public void show(){
+        Toast.makeText(MainActivity.context,"User id: "+this.getId()+
+                        "\nUser name: "+this.getName()+
+                        "\nUser email: "+this.getEmail()+
+                        "\nUser role: "+this.getRole()+
+                        "\nUser Token: "+this.getToken()+
+                        "\nUser User_notes: "+this.getUser_notes()+
+                        "\nUser share_notes: "+this.getShare_notes()
+                ,Toast.LENGTH_LONG).show();
+    }
+    //Getters && Setters
 
-    public String getId() {
+    public String getId(){
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getRole() {
@@ -128,26 +193,5 @@ public class Users extends Database  {
     public void setShare_notes(List<String> share_notes) {
         this.share_notes = share_notes;
     }
-
-    public Users getModel() {
-        return model;
-    }
-
-    public void setModel(Users model) {
-        this.model = model;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
 
 }

@@ -43,7 +43,7 @@ public class Auth extends Activity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(activity.getApplicationContext(), "Authentication failed.",
+                            Toast.makeText(activity.getApplicationContext(), "Create Count Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
@@ -68,7 +68,7 @@ public class Auth extends Activity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(activity.getApplicationContext(), "Authentication failed.",
+                            Toast.makeText(activity.getApplicationContext(), "SingIn Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                            // updateUI(null);
                         }
@@ -98,5 +98,8 @@ public class Auth extends Activity {
             String uid = user.getUid();
 
         }*/
+    }
+    public void singout(){
+        FirebaseAuth.getInstance().signOut();
     }
 }

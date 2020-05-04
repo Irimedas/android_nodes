@@ -3,12 +3,16 @@ package com.irimedas.notifyme;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 import com.irimedas.notifyme.firebase.Auth;
 import com.irimedas.notifyme.models.Users;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,20 +55,22 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this,"name: "+name+"\nEmail: "+email+"\nuid: "+uid,Toast.LENGTH_LONG).show();
             //test db
-                //Users testUser = new Users(uid,name,email);
-                //testUser.save();
-               Users test = new Users();
-               test.find(uid);
+                //new user
+                String idTest = "sñlfjsdlñfsjñlsdfasdñl";
+                Users newUser = new Users(idTest,"test","test@test.com");
+                newUser.save();
+                //find user
+                Users findUser = new Users();
+                findUser.find(uid);
+                //update user
+                Users updateUser = new Users();
+                Map<String,Object> data = new HashMap<>();
+                data.put("name","Trolldeprueva");
+                updateUser.update(uid,data);
+                //remove user
+                newUser.remove();
 
-
-                //Toast.makeText(this,"TABLE: "+test.getModel().getEmail(),Toast.LENGTH_LONG).show();
-               /* User usuario = new User();
-                ArrayList<User> users = usuario.all();
-                String sendUsers;
-                for (User user1 : users){
-
-                }
-                Toast.makeText(this,"Answer db: "+db.show(),Toast.LENGTH_LONG).show();*/
             }
+        auth.singout();
     }
 }
