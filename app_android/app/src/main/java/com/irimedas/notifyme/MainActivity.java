@@ -9,7 +9,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 import com.irimedas.notifyme.firebase.Auth;
-import com.irimedas.notifyme.models.Users;
+import com.irimedas.notifyme.models.*;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this,"name: "+name+"\nEmail: "+email+"\nuid: "+uid,Toast.LENGTH_LONG).show();
             //test db
+                //all user
+                Users allusers = new Users();
+                allusers.all();
                 //new user
                 String idTest = "sñlfjsdlñfsjñlsdfasdñl";
                 Users newUser = new Users(idTest,"test","test@test.com");
@@ -64,12 +68,30 @@ public class MainActivity extends AppCompatActivity {
                 findUser.find(uid);
                 //update user
                 Users updateUser = new Users();
-                Map<String,Object> data = new HashMap<>();
-                data.put("name","Trolldeprueva");
-                updateUser.update(uid,data);
+                Map<String,Object> dataUser = new HashMap<>();
+                dataUser.put("name","Trolldeprueva");
+                updateUser.update(uid,dataUser);
                 //remove user
                 newUser.remove();
 
+                //Notes
+                //allNotes
+                Notes notes = new Notes();
+                notes.all();
+                //new note
+                Notes newNote = new Notes("test1","LOREM IPSUM");
+                newNote.save();
+                newNote.show();
+                //find note
+                Notes findNote = new Notes();
+                findNote.find(newNote.getId());
+                //update note
+                Notes updateNote = new Notes();
+                Map<String,Object> dataNote = new HashMap<>();
+                dataNote.put("subtitle","RANDOM");
+                updateNote.update(newNote.getId(),dataNote);
+                //remove note
+                newNote.remove();
             }
         auth.singout();
     }

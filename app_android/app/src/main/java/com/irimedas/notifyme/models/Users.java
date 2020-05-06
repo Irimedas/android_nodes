@@ -4,16 +4,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -21,15 +14,11 @@ import com.irimedas.notifyme.MainActivity;
 import com.irimedas.notifyme.firebase.Database;
 
 import java.util.List;
-import java.util.Map;
 
 public class Users extends Database  {
+
     //atribute
-
     private static String TABLE = "Users";
-    private Query query;
-
-    private String id;
     private String name;
     private String email;
     private String role;
@@ -40,12 +29,13 @@ public class Users extends Database  {
 
     public Users(){
         super();
-
+        setCollection(TABLE);
     };
 
     public Users(String id, String name, String email) {
         super();
-        this.id = id;
+        setCollection(TABLE);
+        editId(id);
         this.name = name;
         this.email = email;
         this.role = "user";
@@ -54,42 +44,9 @@ public class Users extends Database  {
         this.user_notes = null;
     }
 
-    public void find(String id) {
 
-        where("id","=",id);
-    }
-
-    public void where(String field, String condition, String value) {
-        CollectionReference collectionReference = db.collection(TABLE);
-
-        switch (condition) {
-            case "=":
-                query = collectionReference.whereEqualTo(field, value);
-                break;
-            case ">":
-                query = collectionReference.whereGreaterThan(field, value);
-                break;
-            case ">=":
-                query = collectionReference.whereGreaterThanOrEqualTo(field, value);
-                break;
-            case "<":
-                query = collectionReference.whereLessThan(field, value);
-                break;
-            case "<=":
-                query = collectionReference.whereLessThanOrEqualTo(field, value);
-                break;
-            case "in":
-                query = collectionReference.whereArrayContains(field, value);
-                break;
-            default:
-                query = null;
-                break;
-        }
-        //Executa la query
-        this.get();
-    }
     public void get(){
-        query.get()
+        getQuery().get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -111,27 +68,8 @@ public class Users extends Database  {
     }
 
 
-    public void save(){
-        db.collection(TABLE).document(id).set(this);
-    }
-    public void update( String id, Map<String,Object> data){
-        db.collection(TABLE).document(id).update(data);
-    }
-    public void remove(){
-        db.collection(TABLE).document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(MainActivity.context,"User delete",Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(MainActivity.context,"User delete Fail",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
     public void show(){
-        Toast.makeText(MainActivity.context,"User id: "+this.getId()+
+        Toast.makeText(MainActivity.context,"User id: "+getId()+
                         "\nUser name: "+this.getName()+
                         "\nUser email: "+this.getEmail()+
                         "\nUser role: "+this.getRole()+
@@ -141,11 +79,12 @@ public class Users extends Database  {
                 ,Toast.LENGTH_LONG).show();
     }
     //Getters && Setters
-
     public String getId(){
-        return id;
+        return showId();
     }
-
+    public void setId(String id){
+        editId(id);
+    }
     public String getName() {
         return name;
     }
@@ -193,5 +132,4 @@ public class Users extends Database  {
     public void setShare_notes(List<String> share_notes) {
         this.share_notes = share_notes;
     }
-
 }
