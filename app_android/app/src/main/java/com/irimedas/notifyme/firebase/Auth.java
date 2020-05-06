@@ -9,13 +9,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.irimedas.notifyme.models.Users;
 
 
 public class Auth extends Activity {
 
     private FirebaseAuth mAuth;
-    private String email;
-    private String password;
+    private static String email;
+    private static String password;
     private Activity activity;
     private static String TAG="Auth info";
 
@@ -24,6 +26,16 @@ public class Auth extends Activity {
         this.email = email;
         this.password = password;
         this.activity = activity;
+    }
+    public Auth(String email, String password,String name, Activity activity) {
+        this.mAuth = FirebaseAuth.getInstance();
+        this.email = email;
+        this.password = password;
+        this.activity = activity;
+        // set Displayname
+        FirebaseUser user = mAuth.getCurrentUser();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+        user.updateProfile(profileUpdates);
     }
 
     /**
@@ -39,6 +51,11 @@ public class Auth extends Activity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String userID= user.getUid();
+                            String userName= user.getDisplayName();
+                            String userEmail = email;
+                            Users newUser = new Users(userID,userName,userEmail);
+                            newUser.save();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -102,4 +119,5 @@ public class Auth extends Activity {
     public void singout(){
         FirebaseAuth.getInstance().signOut();
     }
+
 }

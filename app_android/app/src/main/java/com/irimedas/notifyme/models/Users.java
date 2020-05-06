@@ -1,9 +1,13 @@
 package com.irimedas.notifyme.models;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Adapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -11,6 +15,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import com.irimedas.notifyme.MainActivity;
+import com.irimedas.notifyme.adapters.UsersAdapter;
 import com.irimedas.notifyme.firebase.Database;
 
 import java.util.List;
@@ -25,7 +30,7 @@ public class Users extends Database  {
     private String token;
     private List<String> user_notes;
     private List<String> share_notes;
-
+    private static UsersAdapter adapter;
 
     public Users(){
         super();
@@ -51,6 +56,9 @@ public class Users extends Database  {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            adapter= new UsersAdapter(task.getResult(),MainActivity.context);
+                            RecyclerView usersView = MainActivity.UsersView;
+                            usersView.setAdapter(adapter);
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Users result = document.toObject(Users.class);
                                 result.show();
@@ -58,6 +66,7 @@ public class Users extends Database  {
 
                                 //guardar el documenten en un arraylist  de QueryDocumentSnapshot
                                 //passar el arraylist al adapters corresponent
+
                             }
                         } else {
                             Log.d("test", "Error getting documents: ", task.getException());

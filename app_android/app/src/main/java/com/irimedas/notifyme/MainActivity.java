@@ -1,6 +1,9 @@
 package com.irimedas.notifyme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,12 +23,18 @@ public class MainActivity extends AppCompatActivity {
 
     public static Context context;
     private static Auth auth;
+    public static RecyclerView UsersView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.context = this.getApplicationContext();
+        UsersView = findViewById(R.id.rvUsers);
+        UsersView.setLayoutManager(new LinearLayoutManager(this));
+        UsersView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
         auth = new Auth("trolldeprueva@gmail.com","testing",this);
+
     }
 
     @Override
@@ -59,11 +68,12 @@ public class MainActivity extends AppCompatActivity {
                 //all user
                 Users allusers = new Users();
                 allusers.all();
+                allusers.get();
                 //new user
                 String idTest = "sñlfjsdlñfsjñlsdfasdñl";
                 Users newUser = new Users(idTest,"test","test@test.com");
                 newUser.save();
-                //find user
+                /*//find user
                 Users findUser = new Users();
                 findUser.find(uid);
                 //update user
@@ -91,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 dataNote.put("subtitle","RANDOM");
                 updateNote.update(newNote.getId(),dataNote);
                 //remove note
-                newNote.remove();
+                newNote.remove();*/
             }
         auth.singout();
     }
