@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.irimedas.notifyme.MainActivity;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -91,6 +92,10 @@ public class Database {
                 query = null;
                 break;
         }
+    }
+    public void in (String field, List<String> value){
+        CollectionReference collectionReference = db.collection(collection);
+        query = collectionReference.whereArrayContains(field, value);
     }
 
     //getters & setters

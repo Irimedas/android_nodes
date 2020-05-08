@@ -1,15 +1,20 @@
 package com.irimedas.notifyme.models;
 
+import android.content.Context;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.irimedas.notifyme.MainActivity;
+import com.irimedas.notifyme.adapters.NotesAdapter;
+import com.irimedas.notifyme.adapters.UsersAdapter;
 import com.irimedas.notifyme.firebase.Database;
 
 import java.util.List;
@@ -21,6 +26,11 @@ public class Notes extends Database {
     private String title;
     private String body;
     private List<String> note_files;
+
+    private static NotesAdapter adapter;
+    private Context context = MainActivity.context;
+    private RecyclerView view = MainActivity.View;
+
 
     public Notes() {
         super();
@@ -42,6 +52,10 @@ public class Notes extends Database {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            adapter= new NotesAdapter(task.getResult(),context);
+                            RecyclerView usersView = view;
+                            usersView.setAdapter(adapter);
+                            List<Attraction>
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Notes result = document.toObject(Notes.class);
                                 result.show();
@@ -49,6 +63,7 @@ public class Notes extends Database {
 
                                 //guardar el documenten en un arraylist  de QueryDocumentSnapshot
                                 //passar el arraylist al adapters corresponent
+
                             }
                         } else {
                             Log.d("test", "Error getting documents: ", task.getException());
@@ -67,6 +82,12 @@ public class Notes extends Database {
                 ,Toast.LENGTH_LONG).show();
     }
 
+    public void createNote(String userId,String title,String body){
+        Notes newNote = new Notes(title,body);
+       // Users updateUser = new Users();
+
+       // updateUser.update();
+    }
 
     //getters && setters
     public String getId(){

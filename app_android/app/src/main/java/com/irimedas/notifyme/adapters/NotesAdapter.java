@@ -1,7 +1,5 @@
 package com.irimedas.notifyme.adapters;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,27 +7,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.irimedas.notifyme.R;
-
 import com.irimedas.notifyme.models.Notes;
 import com.irimedas.notifyme.models.Users;
 
 import java.util.ArrayList;
 
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
 
-    private ArrayList<Users> list;
+    private ArrayList<Notes> list;
     private Context context;
 
-    public UsersAdapter(QuerySnapshot elements, Context context) {
+    public NotesAdapter(QuerySnapshot elements, Context context) {
         this.list = new ArrayList<>();
         this.context = context;
         //guardem els elements
         for (QueryDocumentSnapshot document : elements) {
-            Users result = document.toObject(Users.class);
+            Notes result = document.toObject(Notes.class);
             list.add(result);
         }
     }
@@ -39,18 +37,17 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView tvName;
-        public TextView tvEmail;
-        public TextView tvShare_notes;
-        public TextView tvUser_notes;
+        public TextView tvTitle;
+        public TextView tvBody;
+        public TextView tvFiles;
+
 
         // declara el contingut de la vista del RecyclerView
         public ViewHolder(View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvName);
-            tvEmail = itemView.findViewById(R.id.tvEmail);
-            tvShare_notes= itemView.findViewById(R.id.tvShare_notes);
-            tvUser_notes= itemView.findViewById(R.id.tvUser_notes);
+            tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvBody = itemView.findViewById(R.id.tvBody);
+            tvFiles= itemView.findViewById(R.id.tvFiles);
             //posem el listener en cada element passat per parametre
             itemView.setOnClickListener(this);
         }
@@ -59,13 +56,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         public void onClick(View v) {
             int positcio = getAdapterPosition();
             Log.i("test",String.valueOf(positcio));
-            // seleciona el usuari
-            Users user= list.get(positcio);
-            // agafa totes les notes del usuari
-            Notes allnotes = new  Notes();
-            allnotes.in("id",user.getUser_notes());
-            //allnotes.all();
-            allnotes.get();
             //mostraPopapMenu(v,positcio);
         }
     }
@@ -73,7 +63,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // infla la vista amb el layout del pare
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.users_llista, parent, false);
+                .inflate(R.layout.notes_llista, parent, false);
         // retora una ViewHolder amb la view creada anteriorment.
         return new ViewHolder(view);
     }
@@ -83,29 +73,23 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        Users item = list.get(position);
+        Notes item = list.get(position);
         if(item!=null){
-        String llistShare_notes="";
-        if(item.getShare_notes()!=null) {
-            for (String element : item.getShare_notes()) {
-                llistShare_notes += element + " ";
+        String llistNotesfiles="";
+        if(item.getNote_files()!=null) {
+            for (String element : item.getNote_files()) {
+                llistNotesfiles += element + " ";
             }
         }
-        String llistUser_notes="";
-        if(item.getUser_notes()!=null) {
-            for (String element : item.getUser_notes()) {
-                llistUser_notes += element + " ";
-            }
-        }
-        holder.tvName.setText(item.getName());
-        holder.tvEmail.setText(item.getEmail());
-        holder.tvShare_notes.setText(llistShare_notes);
-        holder.tvUser_notes.setText(llistUser_notes);
+
+        holder.tvTitle.setText(item.getTitle());
+        holder.tvBody.setText(item.getBody());
+        holder.tvFiles.setText(llistNotesfiles);
+
         }else {
-            holder.tvName.setText("null");
-            holder.tvEmail.setText("null");
-            holder.tvShare_notes.setText("null");
-            holder.tvUser_notes.setText("null");
+            holder.tvTitle.setText("null");
+            holder.tvBody.setText("null");
+            holder.tvFiles.setText("null");
         }
     }
 

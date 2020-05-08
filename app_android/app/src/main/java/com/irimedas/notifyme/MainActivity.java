@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -15,24 +14,22 @@ import com.irimedas.notifyme.firebase.Auth;
 import com.irimedas.notifyme.models.*;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 public class MainActivity extends AppCompatActivity {
 
     public static Context context;
     private static Auth auth;
-    public static RecyclerView UsersView;
+    public static RecyclerView View;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.context = this.getApplicationContext();
-        UsersView = findViewById(R.id.rvUsers);
-        UsersView.setLayoutManager(new LinearLayoutManager(this));
-        UsersView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        View = findViewById(R.id.rvView);
+        View.setLayoutManager(new LinearLayoutManager(this));
+        View.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+
         auth = new Auth("trolldeprueva@gmail.com","testing",this);
 
     }
@@ -69,10 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 Users allusers = new Users();
                 allusers.all();
                 allusers.get();
+
                 //new user
-                String idTest = "sñlfjsdlñfsjñlsdfasdñl";
+                /*String idTest = "sñlfjsdlñfsjñlsdfasdñl";
                 Users newUser = new Users(idTest,"test","test@test.com");
-                newUser.save();
+                newUser.save();*/
                 /*//find user
                 Users findUser = new Users();
                 findUser.find(uid);
@@ -85,11 +83,12 @@ public class MainActivity extends AppCompatActivity {
                 newUser.remove();
 
                 //Notes
-                //allNotes
-                Notes notes = new Notes();
+                //allNotes*/
+               /* Notes notes = new Notes();
                 notes.all();
+                notes.get();*/
                 //new note
-                Notes newNote = new Notes("test1","LOREM IPSUM");
+                /*Notes newNote = new Notes("test1","LOREM IPSUM");
                 newNote.save();
                 newNote.show();
                 //find note
@@ -103,6 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 //remove note
                 newNote.remove();*/
             }
-        auth.singout();
+       // auth.singout();
     }
 }

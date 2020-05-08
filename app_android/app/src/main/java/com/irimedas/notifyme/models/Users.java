@@ -2,11 +2,9 @@ package com.irimedas.notifyme.models;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Adapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,7 +28,10 @@ public class Users extends Database  {
     private String token;
     private List<String> user_notes;
     private List<String> share_notes;
+
     private static UsersAdapter adapter;
+    private Context context = MainActivity.context;
+    private RecyclerView view = MainActivity.View;
 
     public Users(){
         super();
@@ -56,8 +57,8 @@ public class Users extends Database  {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            adapter= new UsersAdapter(task.getResult(),MainActivity.context);
-                            RecyclerView usersView = MainActivity.UsersView;
+                            adapter= new UsersAdapter(task.getResult(),context);
+                            RecyclerView usersView = view;
                             usersView.setAdapter(adapter);
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Users result = document.toObject(Users.class);
