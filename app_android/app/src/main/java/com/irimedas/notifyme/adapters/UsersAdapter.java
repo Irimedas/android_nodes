@@ -18,6 +18,7 @@ import com.irimedas.notifyme.models.Notes;
 import com.irimedas.notifyme.models.Users;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
@@ -31,7 +32,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         for (QueryDocumentSnapshot document : elements) {
             Users result = document.toObject(Users.class);
             list.add(result);
+
         }
+       Users user= list.get(0);
+        List<String> user_Notes = user.getUser_notes();
+        Notes notes = new Notes();
+        String id =list.get(0).getId();
+        notes.find(id);
+        //notes.in("id",user_Notes);
+        //notes.get();
     }
 
 
@@ -53,20 +62,26 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             tvUser_notes= itemView.findViewById(R.id.tvUser_notes);
             //posem el listener en cada element passat per parametre
             itemView.setOnClickListener(this);
+
         }
         //metode a implemantar la interficiea View.onclickListener
         @Override
         public void onClick(View v) {
             int positcio = getAdapterPosition();
-            Log.i("test",String.valueOf(positcio));
+
             // seleciona el usuari
             Users user= list.get(positcio);
             // agafa totes les notes del usuari
             Notes allnotes = new  Notes();
-            allnotes.in("id",user.getUser_notes());
+            List<String> data = new ArrayList<>();
+            data.add("S7MyAZdhAAWG8CcP63x1");
+            //allnotes.in("id",data);
             //allnotes.all();
-            allnotes.get();
+             //allnotes.find(user.getUser_notes().get(0));
+             //allnotes.get();
+
             //mostraPopapMenu(v,positcio);
+           // user.show();
         }
     }
     @Override

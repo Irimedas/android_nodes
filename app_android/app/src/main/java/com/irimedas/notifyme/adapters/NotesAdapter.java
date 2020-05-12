@@ -16,13 +16,14 @@ import com.irimedas.notifyme.models.Notes;
 import com.irimedas.notifyme.models.Users;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
 
     private ArrayList<Notes> list;
     private Context context;
 
-    public NotesAdapter(QuerySnapshot elements, Context context) {
+    /*public NotesAdapter(QuerySnapshot elements, Context context) {
         this.list = new ArrayList<>();
         this.context = context;
         //guardem els elements
@@ -30,8 +31,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             Notes result = document.toObject(Notes.class);
             list.add(result);
         }
-    }
+    }*/
 
+    public NotesAdapter(ArrayList<Notes>listNotes, Context context) {
+        this.list = listNotes;
+        this.context = context;
+
+    }
 
     // RecycleView
 
@@ -85,7 +91,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         holder.tvTitle.setText(item.getTitle());
         holder.tvBody.setText(item.getBody());
         holder.tvFiles.setText(llistNotesfiles);
-
+        item.show();
         }else {
             holder.tvTitle.setText("null");
             holder.tvBody.setText("null");

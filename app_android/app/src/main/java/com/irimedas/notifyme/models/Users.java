@@ -9,13 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import com.irimedas.notifyme.MainActivity;
 import com.irimedas.notifyme.adapters.UsersAdapter;
+import com.irimedas.notifyme.firebase.Auth;
 import com.irimedas.notifyme.firebase.Database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Users extends Database  {
@@ -28,14 +31,16 @@ public class Users extends Database  {
     private String token;
     private List<String> user_notes;
     private List<String> share_notes;
-
+/*
     private static UsersAdapter adapter;
     private Context context = MainActivity.context;
     private RecyclerView view = MainActivity.View;
+    */
 
     public Users(){
         super();
         setCollection(TABLE);
+        obj=Users.class;
     };
 
     public Users(String id, String name, String email) {
@@ -51,33 +56,6 @@ public class Users extends Database  {
     }
 
 
-    public void get(){
-        getQuery().get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            adapter= new UsersAdapter(task.getResult(),context);
-                            RecyclerView usersView = view;
-                            usersView.setAdapter(adapter);
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Users result = document.toObject(Users.class);
-                                result.show();
-                                Log.d("test", document.getId() + " => " + document.getData());
-
-                                //guardar el documenten en un arraylist  de QueryDocumentSnapshot
-                                //passar el arraylist al adapters corresponent
-
-                            }
-                        } else {
-                            Log.d("test", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-    }
-
-
     public void show(){
         Toast.makeText(MainActivity.context,"User id: "+getId()+
                         "\nUser name: "+this.getName()+
@@ -87,7 +65,16 @@ public class Users extends Database  {
                         "\nUser User_notes: "+this.getUser_notes()+
                         "\nUser share_notes: "+this.getShare_notes()
                 ,Toast.LENGTH_LONG).show();
+
+        Log.d("Users","User id: "+getId()+
+                "\nUser name: "+this.getName()+
+                "\nUser email: "+this.getEmail()+
+                "\nUser role: "+this.getRole()+
+                "\nUser Token: "+this.getToken()+
+                "\nUser User_notes: "+this.getUser_notes()+
+                "\nUser share_notes: "+this.getShare_notes());
     }
+
     //Getters && Setters
     public String getId(){
         return showId();

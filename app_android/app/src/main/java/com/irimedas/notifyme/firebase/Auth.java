@@ -1,6 +1,8 @@
 package com.irimedas.notifyme.firebase;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -10,6 +12,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.gson.Gson;
+import com.irimedas.notifyme.MainActivity;
 import com.irimedas.notifyme.models.Users;
 
 
@@ -20,6 +24,10 @@ public class Auth extends Activity {
     private static String password;
     private Activity activity;
     private static String TAG="Auth info";
+
+    public Auth(){
+
+    }
 
     public Auth(String email, String password, Activity activity) {
         this.mAuth = FirebaseAuth.getInstance();
@@ -51,11 +59,14 @@ public class Auth extends Activity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            String userID= user.getUid();
-                            String userName= user.getDisplayName();
+                            //Create Users in db
+                            String userID = user.getUid();
+                            String userName = user.getDisplayName();
                             String userEmail = email;
                             Users newUser = new Users(userID,userName,userEmail);
                             newUser.save();
+                            // Save Usesrs in sharepreferents
+                            sendtoPreferents(newUser);
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -120,4 +131,20 @@ public class Auth extends Activity {
         FirebaseAuth.getInstance().signOut();
     }
 
+    public void sendtoPreferents(Users user){
+        SharedPreferences mPrefs =MainActivity.context.getSharedPreferences("Users",MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        prefsEditor.putString("Users", json);
+        prefsEditor.commit();
+    }
+    public Users readtoPreferent(){
+        Context context = MainActivity.context;
+        Gson gson = new Gson();
+        SharedPreferences mPrefs = context.getSharedPreferences("Users",MODE_PRIVATE);
+        String json = mPrefs.getString("Users",null);
+        Users obj = gson.fromJson(json, Users.class);
+        return obj;
+    }
 }

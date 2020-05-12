@@ -17,7 +17,10 @@ import com.irimedas.notifyme.adapters.NotesAdapter;
 import com.irimedas.notifyme.adapters.UsersAdapter;
 import com.irimedas.notifyme.firebase.Database;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Notes extends Database {
 
@@ -26,10 +29,11 @@ public class Notes extends Database {
     private String title;
     private String body;
     private List<String> note_files;
+    private List<String> users_ids;
 
     private static NotesAdapter adapter;
     private Context context = MainActivity.context;
-    private RecyclerView view = MainActivity.View;
+    private RecyclerView view = MainActivity.rvList_notes;
 
 
     public Notes() {
@@ -44,8 +48,9 @@ public class Notes extends Database {
         this.title = title;
         this.body = body;
         this.note_files=null;
+        this.users_ids=null;
     }
-
+/*
     public void get(){
         getQuery().get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -53,12 +58,11 @@ public class Notes extends Database {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             adapter= new NotesAdapter(task.getResult(),context);
-                            RecyclerView usersView = view;
-                            usersView.setAdapter(adapter);
-                            List<Attraction>
+                            RecyclerView notesView = view;
+                            notesView.setAdapter(adapter);
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Notes result = document.toObject(Notes.class);
-                                result.show();
+                               // result.show();
                                 Log.d("test", document.getId() + " => " + document.getData());
 
                                 //guardar el documenten en un arraylist  de QueryDocumentSnapshot
@@ -71,7 +75,7 @@ public class Notes extends Database {
                     }
                 });
 
-    }
+    }*/
 
 
     public void show(){
@@ -81,12 +85,51 @@ public class Notes extends Database {
                         "\nNote Files "+this.getNote_files()
                 ,Toast.LENGTH_LONG).show();
     }
-
+    /**
+     * Method of create new notes and link with User
+     * @param userId String Value of ID's Users Owner
+     * @param title String Value of Title's note
+     * @param body String Value of Body's note
+     * */
     public void createNote(String userId,String title,String body){
         Notes newNote = new Notes(title,body);
-       // Users updateUser = new Users();
+        List<String> id = new ArrayList<>();
+        id.add(userId);
+        newNote.setUsers_ids(id);
+        newNote.save();
+    }
 
-       // updateUser.update();
+    /**
+     * Method of share with one note
+     * @param shareUserId String Value of ID's User target
+     * */
+    public void shareNote(String shareUserId){
+
+        List<String>users_ids = this.getUsers_ids();
+        /// if not exist shareUserId in users_ids
+        if(!(users_ids.contains(shareUserId))){
+        users_ids.add(shareUserId);
+        this.setUsers_ids(users_ids);
+        Map<String,Object> data = new HashMap<>();
+        data.put("users_ids",users_ids);
+        this.update(getId(),data);
+        }
+    }
+    /**
+     * Method of remove the share with one note
+     * @param shareUserId String Value of ID's User target
+     * */
+    public void decomposeShareNote(String shareUserId){
+
+        List<String>users_ids = this.getUsers_ids();
+        /// if exist shareUserId in users_ids
+        if(users_ids.contains(shareUserId)){
+            users_ids.remove(shareUserId);
+            this.setUsers_ids(users_ids);
+            Map<String,Object> data = new HashMap<>();
+            data.put("users_ids",users_ids);
+            this.update(getId(),data);
+        }
     }
 
     //getters && setters
@@ -118,5 +161,13 @@ public class Notes extends Database {
 
     public void setNote_files(List<String> note_files) {
         this.note_files = note_files;
+    }
+
+    public List<String> getUsers_ids() {
+        return users_ids;
+    }
+
+    public void setUsers_ids(List<String> users_ids) {
+        this.users_ids = users_ids;
     }
 }
