@@ -3,6 +3,7 @@ package com.irimedas.notifyme;
 import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -19,26 +20,31 @@ import java.util.ArrayList;
 public class Functions {
 
     private Context context;
-    private Auth auth;
+    //private Auth auth;
     private RecyclerView rvList_notes;
     private static NotesAdapter adapter;
 
-    public Functions(Auth auth,RecyclerView rvList_notes, Context context ) {
-        this.auth = auth;
-        this.rvList_notes = rvList_notes;
-        this.context = context;
+    public Functions() {
+        this.context= MainActivity.context;
+        this.rvList_notes = MainActivity.rvList_notes;
+       // this.auth = auth;
+        //this.rvList_notes = rvList_notes;
+        //this.context = context;
     }
 
-    public void onload() {
+    public void onload(FirebaseUser user) {
 
-        FirebaseUser user = null;
+       /* FirebaseUser user = null;
 
         auth.singIn();
         user = auth.getCurrentUser();
         if (user == null) {
             // sent to user in login
-            auth.createAccount();
+
+
+            //auth.createAccount();
         } else {
+*/
 
             // find the user
             Users findUser = new Users();
@@ -71,4 +77,4 @@ public class Functions {
             });
         }
     }
-}
+//}

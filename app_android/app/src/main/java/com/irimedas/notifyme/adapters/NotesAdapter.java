@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.irimedas.notifyme.R;
+import com.irimedas.notifyme.firebase.Auth;
 import com.irimedas.notifyme.models.Notes;
 import com.irimedas.notifyme.models.Users;
 
@@ -68,8 +69,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // infla la vista amb el layout del pare
+//        View view = LayoutInflater.from(parent.getContext())
+//                .inflate(R.layout.notes_llista, parent, false);
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.notes_llista, parent, false);
+                .inflate(R.layout.fragment_notes, parent, false);
         // retora una ViewHolder amb la view creada anteriorment.
         return new ViewHolder(view);
     }

@@ -1,37 +1,18 @@
 package com.irimedas.notifyme;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.irimedas.notifyme.adapters.NotesAdapter;
 import com.irimedas.notifyme.firebase.Auth;
-import com.irimedas.notifyme.firebase.Database;
-import com.irimedas.notifyme.models.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.irimedas.notifyme.firebase.Database.obj;
+import com.irimedas.notifyme.fragments.LoginFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,14 +22,15 @@ public class MainActivity extends AppCompatActivity {
     //public static RecyclerView View;
     public static RecyclerView rvList_notes;
     private static NotesAdapter adapter;
-    private static Functions functions;
-
+    public static Functions functions;
+    public static FirebaseUser user;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // setContentView(R.layout.fragment_login);
         this.context = this.getApplicationContext();
        /* View = findViewById(R.id.rvView);
         View.setLayoutManager(new LinearLayoutManager(this));
@@ -62,15 +44,50 @@ public class MainActivity extends AppCompatActivity {
         //else send to view load
 
 
-        auth = new Auth("trolldeprueva@gmail.com","testing",this);
-        functions = new Functions(auth,rvList_notes,this);
+        //auth = new Auth("trolldeprueva@gmail.com","testing",this);
+        //auth = new Auth();
+       // user = auth.readtoPreferent();
+
+        //read prefrensces
+        //ArrayList<String> userPreference = new Auth().readtoPreferent();
+        String[] userPreference = new Auth().readtoPreferent();
+//        Toast.makeText(this, userPreference.get(0)+"\n"+userPreference.get(1), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "TEST"+userPreference[0]+"\nTEST"+userPreference[1], Toast.LENGTH_SHORT).show();
+        if(userPreference!=null) {
+            auth = new Auth(userPreference[0], userPreference[1], this);
+        }else{
+            auth=new Auth();
+        }
+        functions = new Functions();
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        functions.onload();
+
+
+//        user = null;
+
+          auth.singIn();
+          user = auth.getCurrentUser();
+
+
+        if (user != null){
+            //auth.goTohome(user);
+            functions.onload(user);
+            /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_layout, new NotesFragment());
+            transaction.commit();*/
+        }else {
+
+           //setContentView(R.layout.fragment_login);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            //transaction.replace(R.id.main_layout, new LoginFragment());
+            transaction.add(R.id.main_layout,new LoginFragment());
+            transaction.commit();
+        }
+
 
        /* FirebaseUser user = null;
 
@@ -220,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 //remove note
                 newNote.remove();*/
 //            }
-//       auth.singout();
+
+
    }
 }
