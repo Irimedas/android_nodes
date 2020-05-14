@@ -10,7 +10,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
-import com.irimedas.notifyme.MainActivity;
+import com.irimedas.notifyme.controller.MainActivity;
 
 import java.util.List;
 import java.util.Map;

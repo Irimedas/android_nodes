@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import com.irimedas.notifyme.MainActivity;
+import com.irimedas.notifyme.controller.MainActivity;
 import com.irimedas.notifyme.adapters.UsersAdapter;
 import com.irimedas.notifyme.firebase.Database;
 

@@ -13,7 +13,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.irimedas.notifyme.R;
 import com.irimedas.notifyme.models.Notes;
-import com.irimedas.notifyme.models.Users;
 
 import java.util.ArrayList;
 

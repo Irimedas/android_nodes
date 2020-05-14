@@ -1,4 +1,4 @@
-package com.irimedas.notifyme;
+package com.irimedas.notifyme.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -6,19 +6,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
+import com.irimedas.notifyme.R;
 import com.irimedas.notifyme.firebase.Auth;
 import com.irimedas.notifyme.models.*;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static Context context;
     private static Auth auth;
     public static RecyclerView View;
+
+    //Te lleva a la lista de notas(cambiar)
+    private Button bNotesList;
 
 
     @Override
@@ -31,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         View.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
 
         auth = new Auth("trolldeprueva@gmail.com","testing",this);
+
+        bNotesList = findViewById(R.id.bNotesList);
+        bNotesList.setOnClickListener(this);
 
     }
 
@@ -103,5 +113,16 @@ public class MainActivity extends AppCompatActivity {
                 newNote.remove();*/
             }
        // auth.singout();
+    }
+
+    //Te lleva a la lista de notas(cambiar)
+    @Override
+    public void onClick(android.view.View v) {
+        Intent intent = new Intent();
+
+        if(bNotesList.isPressed()){
+            intent = new Intent(this, NotesListActivity.class);
+            startActivity(intent);
+        }
     }
 }

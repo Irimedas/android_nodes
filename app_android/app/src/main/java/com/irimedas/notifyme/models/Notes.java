@@ -1,7 +1,6 @@
 package com.irimedas.notifyme.models;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,9 +11,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.irimedas.notifyme.MainActivity;
+import com.irimedas.notifyme.controller.MainActivity;
 import com.irimedas.notifyme.adapters.NotesAdapter;
-import com.irimedas.notifyme.adapters.UsersAdapter;
 import com.irimedas.notifyme.firebase.Database;
 
 import java.util.List;
@@ -55,7 +53,6 @@ public class Notes extends Database {
                             adapter= new NotesAdapter(task.getResult(),context);
                             RecyclerView usersView = view;
                             usersView.setAdapter(adapter);
-                            List<Attraction>
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Notes result = document.toObject(Notes.class);
                                 result.show();
@@ -96,10 +93,10 @@ public class Notes extends Database {
     public void setId(String id){
         editId(id);
     }
+
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -107,7 +104,6 @@ public class Notes extends Database {
     public String getBody() {
         return body;
     }
-
     public void setBody(String body) {
         this.body = body;
     }
@@ -115,7 +111,6 @@ public class Notes extends Database {
     public List<String> getNote_files() {
         return note_files;
     }
-
     public void setNote_files(List<String> note_files) {
         this.note_files = note_files;
     }
