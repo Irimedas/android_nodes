@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(bNotesList.isPressed()){
             intent = new Intent(this, NotesListActivity.class);
+
             startActivity(intent);
         }
     }
