@@ -50,7 +50,7 @@ public class Users extends Database  {
         this.user_notes = null;
     }
 
-
+/*
     public void get(){
         getQuery().get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -75,7 +75,7 @@ public class Users extends Database  {
                     }
                 });
 
-    }
+    }*/
 
 
     public void show(){

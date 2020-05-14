@@ -1,5 +1,6 @@
 package com.irimedas.notifyme.firebase;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.irimedas.notifyme.controller.MainActivity;
 
 import java.util.List;
@@ -93,10 +95,32 @@ public class Database {
                 break;
         }
     }
-    public void in (String field, List<String> value){
+    public void in (String field, String value){
         CollectionReference collectionReference = db.collection(collection);
         query = collectionReference.whereArrayContains(field, value);
     }
+
+    //exectuion queries
+
+    public interface FirestoreCallback{
+        void onCallback(QuerySnapshot documents);
+    }
+    public void readData(final FirestoreCallback firestoreCallback){
+
+        query.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            firestoreCallback.onCallback(task.getResult());
+                        } else {
+                            Log.d("test", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+    }
+
 
     //getters & setters
 

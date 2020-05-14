@@ -21,9 +21,11 @@ import com.irimedas.notifyme.models.*;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static Context context;
-    private static Auth auth;
+    public static Auth auth;
     public static RecyclerView View;
-
+    private String[] userPreference; //contain pass and email last user that make login
+    public static FirebaseUser user; //user from fireBase
+    private Intent intent;
     //Te lleva a la lista de notas(cambiar)
     private Button bNotesList;
 
@@ -33,29 +35,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.context = this.getApplicationContext();
-        View = findViewById(R.id.rvView);
+
+        /*View = findViewById(R.id.rvView);
         View.setLayoutManager(new LinearLayoutManager(this));
-        View.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        View.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));*/
 
-        auth = new Auth("trolldeprueva@gmail.com","testing",this);
 
-        bNotesList = findViewById(R.id.bNotesList);
-        bNotesList.setOnClickListener(this);
+
+
+        //auth.singout();
+        //intent = new Intent();
+
+        //auth = new Auth("trolldeprueva@gmail.com","testing",this);
+
+        //bNotesList = findViewById(R.id.bNotesList);
+        //bNotesList.setOnClickListener(this);
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        FirebaseUser user = null;
+        userPreference=new Auth().readtoPreferent();
+        if(userPreference!=null) {
+            auth = new Auth(userPreference[0], userPreference[1], this);
+        }else{
+            auth=new Auth();
+        }
+        //FirebaseUser user = null;
 
             auth.singIn();
             user = auth.getCurrentUser();
             if(user == null){
-                auth.createAccount();
+                //auth.createAccount();
+                intent = new Intent(this, LogintActivity.class);
+                startActivity(intent);
             }else{
-
+                intent = new Intent(this, NotesListActivity.class);
+                startActivity(intent);
+/*
 
             // Name, email address, and profile photo Url
             String name = user.getDisplayName();
@@ -118,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Te lleva a la lista de notas(cambiar)
     @Override
     public void onClick(android.view.View v) {
-        Intent intent = new Intent();
+        //intent = new Intent();
 
         if(bNotesList.isPressed()){
             intent = new Intent(this, NotesListActivity.class);
@@ -126,4 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
     }
+
+
 }

@@ -63,9 +63,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             Users user= list.get(positcio);
             // agafa totes les notes del usuari
             Notes allnotes = new  Notes();
-            allnotes.in("id",user.getUser_notes());
+           // allnotes.in("id",user.getUser_notes());
             //allnotes.all();
-            allnotes.get();
+           // allnotes.get();
             //mostraPopapMenu(v,positcio);
         }
     }
