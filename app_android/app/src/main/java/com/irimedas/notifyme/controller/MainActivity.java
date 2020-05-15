@@ -1,21 +1,17 @@
 package com.irimedas.notifyme.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseUser;
 import com.irimedas.notifyme.R;
 import com.irimedas.notifyme.firebase.Auth;
-import com.irimedas.notifyme.models.*;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -68,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             user = auth.getCurrentUser();
             if(user == null){
                 //auth.createAccount();
-                intent = new Intent(this, LogintActivity.class);
+                intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
             }else{
                 intent = new Intent(this, NotesListActivity.class);

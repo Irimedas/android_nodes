@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.irimedas.notifyme.R;
 import com.irimedas.notifyme.firebase.Auth;
 
-public class LogintActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnlogin;
 
@@ -41,7 +41,7 @@ public class LogintActivity extends AppCompatActivity implements View.OnClickLis
                     Auth loginAuth = new Auth(email,password,this);
                     ///MainActivity.auth = loginAuth;
                     loginAuth.singIn();
-                    startActivity(new Intent(this, MainActivity.class));
+                    //startActivity(new Intent(this, MainActivity.class));
 
                     //Toast.makeText(getApplicationContext(), "TEST:\nemail="+email+"\npassword="+password, Toast.LENGTH_SHORT).show();
                     break;

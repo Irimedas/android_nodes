@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -13,13 +14,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.irimedas.notifyme.R;
 import com.irimedas.notifyme.adapters.NotesListAdapter;
+import com.irimedas.notifyme.firebase.Auth;
 import com.irimedas.notifyme.firebase.Database;
 import com.irimedas.notifyme.models.Notes;
 import com.irimedas.notifyme.models.Users;
 
 import java.util.ArrayList;
 
-public class NotesListActivity extends AppCompatActivity implements NotesListAdapter.ItemClickListener {
+public class NotesListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private NotesListAdapter notesListAdapter;
     private ArrayList<Notes> notesList;
@@ -45,16 +47,15 @@ public class NotesListActivity extends AppCompatActivity implements NotesListAda
         notesListAdapter.setClickListener(this);
         rvNotesList.setAdapter(notesListAdapter);*/
 
+        Button btnlogout = findViewById(R.id.btn_logout);
+        btnlogout.setOnClickListener(this);
+
         FirebaseUser user = MainActivity.user;
         onload(user);
 
 
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + notesListAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-    }
 
     public void onload(FirebaseUser user){
         // find the user
@@ -82,7 +83,12 @@ public class NotesListActivity extends AppCompatActivity implements NotesListAda
                         RecyclerView rvNotesList = findViewById(R.id.rvNotesList);
                         rvNotesList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         notesListAdapter = new NotesListAdapter(getApplicationContext(), notesList);
-                        //notesListAdapter.setClickListener(this);
+                        notesListAdapter.setClickListener(new NotesListAdapter.ItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Toast.makeText(getApplicationContext(), "You clicked " + notesListAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         rvNotesList.setAdapter(notesListAdapter);
 
 
@@ -90,6 +96,22 @@ public class NotesListActivity extends AppCompatActivity implements NotesListAda
                 });
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        //Toast.makeText(this, "BUtton You clicked "+v.getId(), Toast.LENGTH_SHORT).show();
+        if(v!=null){
+            int idElement = v.getId();
+            switch (idElement){
+                case R.id.btn_logout:
+                    Auth logout = new Auth();
+                    logout.singout();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
 

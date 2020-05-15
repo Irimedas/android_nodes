@@ -1,7 +1,9 @@
 package com.irimedas.notifyme.firebase;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.irimedas.notifyme.controller.LoginActivity;
 import com.irimedas.notifyme.controller.MainActivity;
 import com.irimedas.notifyme.models.Users;
 
@@ -99,6 +102,11 @@ public class Auth extends Activity {
                                 String userEmail = email;
                                 Users newUser = new Users(userID, userName, userEmail);
                                 sendtoPreferents(user, password);
+                                goTohome();
+
+//                                startActivity(new Intent(MainActivity.context, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                               // finish();
+                                //startActivity(new Intent(MainActivity.context, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                 //goTohome(user);
                                 //Toast.makeText(activity.getApplicationContext(), "TEST:\nemail="+email+"\npassword="+password+"\nloaded="+loaded, Toast.LENGTH_SHORT).show();
                                 //   updateUI(user);
@@ -112,11 +120,15 @@ public class Auth extends Activity {
                             }
 
                             // ...
+
+
                         }
+
                     });
-        } else {
-            singout();
         }
+//        else {
+//            singout();
+//        }
     }
 
     /**
@@ -146,6 +158,8 @@ public class Auth extends Activity {
 
         FirebaseAuth.getInstance().signOut();
         clearPreferent();
+        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        goTohome();
     }
     /**
      * Sharepreferences
@@ -162,6 +176,7 @@ public class Auth extends Activity {
         String json = data.toString();
         prefsEditor.putString("User", json);
         prefsEditor.commit();
+
     }
 
     public String[] readtoPreferent() {
@@ -183,5 +198,15 @@ public class Auth extends Activity {
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         prefsEditor.remove("User");
         prefsEditor.commit();
+
+        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+    public void goTohome(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                android.os.Process.killProcess(android.os.Process.myPid());//<-- this line is black Mage!!! Why???!! Holy shit!!!
+            }
+        }, 1000);
     }
 }
