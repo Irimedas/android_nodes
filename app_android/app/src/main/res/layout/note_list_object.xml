@@ -53,12 +53,12 @@
 
                 </LinearLayout>
 
-                <!--<ImageButton
+                <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:background="@android:color/transparent"
                     android:tint="@color/grey_40"
-                    android:src="@drawable/ic_more_vert" />-->
+                    android:src="@drawable/ic_more_vert" />
 
             </LinearLayout>
             <!-- End Top Block -->

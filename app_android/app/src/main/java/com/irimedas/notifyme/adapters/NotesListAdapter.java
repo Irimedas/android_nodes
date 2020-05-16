@@ -36,9 +36,18 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         String title = notes.get(position).getTitle();
         String body = notes.get(position).getBody();
+        String newBody = "";
+
+        if(body.length() >= 50){
+            newBody = body.substring(0, 50);
+            newBody += "...";
+
+        }else{
+            newBody =  body;
+        }
 
         holder.tvTitle.setText(title);
-        holder.tvBody.setText(body);
+        holder.tvBody.setText(newBody);
     }
 
     // total number of rows

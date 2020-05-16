@@ -80,6 +80,8 @@ public class NotesListActivity extends AppCompatActivity implements View.OnClick
                             notesList.add(result);
                         }
 
+//                      notesList.add(new Notes("Esto es una nota", "Loren ipsum dot sit amet."));
+
                         RecyclerView rvNotesList = findViewById(R.id.rvNotesList);
                         rvNotesList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         notesListAdapter = new NotesListAdapter(getApplicationContext(), notesList);
