@@ -1,9 +1,6 @@
 package com.irimedas.notifyme.models;
 
-import android.content.Context;
 import android.widget.Toast;
-import androidx.recyclerview.widget.RecyclerView;
-import com.irimedas.notifyme.adapters.NotesAdapter;
 import com.irimedas.notifyme.controller.MainActivity;
 import com.irimedas.notifyme.firebase.Database;
 
