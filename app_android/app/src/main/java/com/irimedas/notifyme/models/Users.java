@@ -1,19 +1,12 @@
 package com.irimedas.notifyme.models;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import com.irimedas.notifyme.controller.MainActivity;
-import com.irimedas.notifyme.adapters.UsersAdapter;
+import com.irimedas.notifyme.controller.adapters.UsersAdapter;
 import com.irimedas.notifyme.firebase.Database;
 
 import java.util.List;

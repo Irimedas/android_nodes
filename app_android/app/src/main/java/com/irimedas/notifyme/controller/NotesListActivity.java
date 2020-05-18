@@ -1,11 +1,14 @@
 package com.irimedas.notifyme.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.irimedas.notifyme.R;
-import com.irimedas.notifyme.adapters.NotesListAdapter;
+import com.irimedas.notifyme.controller.adapters.NotesListAdapter;
 import com.irimedas.notifyme.firebase.Auth;
 import com.irimedas.notifyme.firebase.Database;
 import com.irimedas.notifyme.models.Notes;
@@ -22,7 +25,7 @@ import com.irimedas.notifyme.models.Users;
 
 import java.util.ArrayList;
 
-public class NotesListActivity extends AppCompatActivity implements View.OnClickListener {
+public class NotesListActivity extends AppCompatActivity {
 
     private NotesListAdapter notesListAdapter;
     private ArrayList<Notes> notesList;
@@ -33,6 +36,9 @@ public class NotesListActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.notes_list);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // data to populate the RecyclerView with
         /*notesList = new ArrayList<>();
@@ -49,13 +55,17 @@ public class NotesListActivity extends AppCompatActivity implements View.OnClick
         notesListAdapter.setClickListener(this);
         rvNotesList.setAdapter(notesListAdapter);*/
 
-        Button btnlogout = findViewById(R.id.btn_logout);
-        btnlogout.setOnClickListener(this);
 
         FirebaseUser user = MainActivity.user;
         onload(user);
 
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
 
@@ -106,19 +116,18 @@ public class NotesListActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void onClick(View v) {
-        //Toast.makeText(this, "BUtton You clicked "+v.getId(), Toast.LENGTH_SHORT).show();
-        if(v!=null){
-            int idElement = v.getId();
-            switch (idElement){
-                case R.id.btn_logout:
-                    Auth logout = new Auth();
-                    logout.singout();
-                    break;
-                default:
-                    break;
-            }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.mi_logout:
+                Auth logout = new Auth();
+                logout.singout();
+                break;
+            default:
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
+
 }
 

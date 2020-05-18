@@ -1,4 +1,4 @@
-package com.irimedas.notifyme.adapters;
+package com.irimedas.notifyme.controller.adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 
