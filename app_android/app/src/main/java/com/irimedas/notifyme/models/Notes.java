@@ -4,12 +4,13 @@ import android.widget.Toast;
 import com.irimedas.notifyme.controller.MainActivity;
 import com.irimedas.notifyme.firebase.Database;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Notes extends Database {
+public class Notes extends Database implements Serializable {
 
     //atributes
     private static String TABLE = "Notes";

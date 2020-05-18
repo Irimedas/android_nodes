@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ public class NotesListActivity extends AppCompatActivity implements View.OnClick
 
     private NotesListAdapter notesListAdapter;
     private ArrayList<Notes> notesList;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,8 @@ public class NotesListActivity extends AppCompatActivity implements View.OnClick
                             notesList.add(result);
                         }
 
-//                      notesList.add(new Notes("Esto es una nota", "Loren ipsum dot sit amet."));
+                        notesList.add(new Notes("Esto es una nota", "Loren ipsum dot sit amet. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."));
+                        notesList.add(new Notes("Esto es otra nota", "Este es el cuerpo de la nota"));
 
                         RecyclerView rvNotesList = findViewById(R.id.rvNotesList);
                         rvNotesList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -89,11 +92,13 @@ public class NotesListActivity extends AppCompatActivity implements View.OnClick
                             @Override
                             public void onItemClick(View view, int position) {
                                 Toast.makeText(getApplicationContext(), "You clicked " + notesListAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+
+                                intent = new Intent(getApplicationContext(), NoteEditActivity.class);
+                                intent.putExtra("note", notesListAdapter.getItem(position));
+                                startActivity(intent);
                             }
                         });
                         rvNotesList.setAdapter(notesListAdapter);
-
-
                     }
                 });
             }
