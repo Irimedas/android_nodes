@@ -1,18 +1,23 @@
 package com.irimedas.notifyme.controller;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -24,6 +29,8 @@ import com.irimedas.notifyme.models.Notes;
 import com.irimedas.notifyme.models.Users;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class NotesListActivity extends AppCompatActivity {
 
@@ -31,14 +38,49 @@ public class NotesListActivity extends AppCompatActivity {
     private ArrayList<Notes> notesList;
     private Intent intent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.notes_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tb_menu);
         setSupportActionBar(toolbar);
+
+        //Floating Button
+        FloatingActionButton fb_addNote = findViewById(R.id.fb_addNote);
+        fb_addNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText edtText = new EditText(v.getContext());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Prompt dialog demo !");
+                builder.setMessage("What is your name?");
+                builder.setCancelable(false);
+                builder.setView(edtText);
+                builder.setPositiveButton("Prompt", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "Hello " + edtText.getText() + " ! how are you?", Toast.LENGTH_LONG).show();
+                        //create Note
+                        Notes newNote= new Notes(edtText.getText().toString(),null);
+                        //edit Note
+                        intent = new Intent(getApplicationContext(), NoteEditActivity.class);
+                        intent.putExtra("note", newNote);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "You've changed your mind to delete all records", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+            }
+        });
 
         // data to populate the RecyclerView with
         /*notesList = new ArrayList<>();
@@ -86,14 +128,17 @@ public class NotesListActivity extends AppCompatActivity {
                     @Override
                     public void onCallback(QuerySnapshot documents) {
                         //Container of notes
-                        ArrayList<Notes> notesList = new ArrayList<>();
+                        notesList = new ArrayList<>();
                         for (QueryDocumentSnapshot document : documents) {
+//                            Log.i("TESTdb","Note data "+document.getData().get("id"));
                             Notes result = document.toObject(Notes.class);
+                            result.setId(document.getData().get("id").toString());
                             notesList.add(result);
                         }
-
+                        /*
                         notesList.add(new Notes("Esto es una nota", "Loren ipsum dot sit amet. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."));
                         notesList.add(new Notes("Esto es otra nota", "Este es el cuerpo de la nota"));
+                        */
 
                         RecyclerView rvNotesList = findViewById(R.id.rvNotesList);
                         rvNotesList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -103,7 +148,7 @@ public class NotesListActivity extends AppCompatActivity {
                             public void onItemClick(View view, int position) {
                                 Toast.makeText(getApplicationContext(), "You clicked " + notesListAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
 
-                                intent = new Intent(getApplicationContext(), NoteEditActivity.class);
+                                intent = new Intent(getApplicationContext(), NoteShowActivity.class);
                                 intent.putExtra("note", notesListAdapter.getItem(position));
                                 startActivity(intent);
                             }
@@ -119,7 +164,7 @@ public class NotesListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.mi_logout:
+            case R.id.mi_noteEdit:
                 Auth logout = new Auth();
                 logout.singout();
                 break;
@@ -128,6 +173,7 @@ public class NotesListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }
 

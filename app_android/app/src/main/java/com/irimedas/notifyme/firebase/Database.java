@@ -142,7 +142,7 @@ public class Database {
     }
 
     public static String showId() {
-        return id;
+        return Database.id;
     }
 
     public static void editId(String id) {

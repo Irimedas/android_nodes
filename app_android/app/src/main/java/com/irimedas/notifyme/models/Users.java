@@ -19,8 +19,7 @@ public class Users extends Database  {
     private String email;
     private String role;
     private String token;
-    private List<String> user_notes;
-    private List<String> share_notes;
+    private String id;
 
     private static UsersAdapter adapter;
     private Context context = MainActivity.context;
@@ -34,13 +33,11 @@ public class Users extends Database  {
     public Users(String id, String name, String email) {
         super();
         setCollection(TABLE);
-        editId(id);
+        this.id = id;
         this.name = name;
         this.email = email;
         this.role = "user";
         this.token = null;
-        this.share_notes = null;
-        this.user_notes = null;
     }
 
 /*
@@ -76,17 +73,16 @@ public class Users extends Database  {
                         "\nUser name: "+this.getName()+
                         "\nUser email: "+this.getEmail()+
                         "\nUser role: "+this.getRole()+
-                        "\nUser Token: "+this.getToken()+
-                        "\nUser User_notes: "+this.getUser_notes()+
-                        "\nUser share_notes: "+this.getShare_notes()
+                        "\nUser Token: "+this.getToken()
+
                 ,Toast.LENGTH_LONG).show();
     }
     //Getters && Setters
     public String getId(){
-        return showId();
+        return this.id;
     }
     public void setId(String id){
-        editId(id);
+        this.id = id;
     }
     public String getName() {
         return name;
@@ -120,19 +116,5 @@ public class Users extends Database  {
         this.token = token;
     }
 
-    public List<String> getUser_notes() {
-        return user_notes;
-    }
 
-    public void setUser_notes(List<String> user_notes) {
-        this.user_notes = user_notes;
-    }
-
-    public List<String> getShare_notes() {
-        return share_notes;
-    }
-
-    public void setShare_notes(List<String> share_notes) {
-        this.share_notes = share_notes;
-    }
 }

@@ -86,7 +86,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         Users item = list.get(position);
         if(item!=null){
         String llistShare_notes="";
-        if(item.getShare_notes()!=null) {
+       /* if(item.getShare_notes()!=null) {
             for (String element : item.getShare_notes()) {
                 llistShare_notes += element + " ";
             }
@@ -96,11 +96,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             for (String element : item.getUser_notes()) {
                 llistUser_notes += element + " ";
             }
-        }
+        }*/
         holder.tvName.setText(item.getName());
         holder.tvEmail.setText(item.getEmail());
         holder.tvShare_notes.setText(llistShare_notes);
-        holder.tvUser_notes.setText(llistUser_notes);
+      //  holder.tvUser_notes.setText(llistUser_notes);
         }else {
             holder.tvName.setText("null");
             holder.tvEmail.setText("null");

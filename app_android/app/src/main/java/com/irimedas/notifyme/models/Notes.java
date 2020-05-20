@@ -18,6 +18,7 @@ public class Notes extends Database implements Serializable {
     private String body;
     private List<String> note_files;
     private List<String> users_ids;
+    private String id;
 
     public Notes() {
         super();
@@ -27,7 +28,7 @@ public class Notes extends Database implements Serializable {
     public Notes(String title, String body) {
         super();
         setCollection(TABLE);
-        setId(generateId());
+        this.id = generateId();
         this.title = title;
         this.body = body;
         this.note_files=null;
@@ -49,11 +50,13 @@ public class Notes extends Database implements Serializable {
      * */
     public void createNote(String userId,String title,String body){
         Notes newNote = new Notes(title,body);
-        List<String> id = new ArrayList<>();
-        id.add(userId);
-        newNote.setUsers_ids(id);
+        List<String> idList = new ArrayList<>();
+        idList.add(userId);
+        newNote.setUsers_ids(idList);
         newNote.save();
     }
+
+
 
     /**
      * Method of share with one note
@@ -90,10 +93,13 @@ public class Notes extends Database implements Serializable {
 
     //getters && setters
     public String getId(){
-        return showId();
+        //return showId();
+        return this.id;
     }
     public void setId(String id){
-        editId(id);
+
+//        editId(id);
+        this.id= id;
     }
     public String getTitle() {
         return title;

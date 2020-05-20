@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.tb_menu);
         setSupportActionBar(toolbar);
         this.context = this.getApplicationContext();
 
@@ -163,11 +163,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.mi_logout) {
+        if (id == R.id.mi_noteEdit) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
