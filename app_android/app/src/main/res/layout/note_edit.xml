@@ -69,6 +69,7 @@
             android:textAlignment="inherit"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@android:color/white"
+            android:textAlignment="inherit"
             app:fontFamily="sans-serif-medium" />
 
         <androidx.cardview.widget.CardView
@@ -98,6 +99,7 @@
                     android:textAlignment="inherit"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/grey_80"
+                    android:textAlignment="inherit"
                     android:visibility="visible" />
 
             </LinearLayout>
