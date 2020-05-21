@@ -91,11 +91,11 @@ public class NoteViewActivity extends AppCompatActivity implements View.OnClickL
                     break;
                 case R.id.ib_shareNote:
                     final EditText edtText = new EditText(v.getContext());
-                    builder.setTitle("Prompt dialog demo !");
-                    builder.setMessage("What is your name?");
+                    builder.setTitle(R.string.note_share_title);
+                    builder.setMessage(R.string.note_share_message);
                     builder.setCancelable(false);
                     builder.setView(edtText);
-                    builder.setPositiveButton("Prompt", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(R.string.note_add_accept, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                            // Toast.makeText(getApplicationContext(), "Hello " + edtText.getText() + " ! how are you?", Toast.LENGTH_LONG).show();
@@ -118,10 +118,10 @@ public class NoteViewActivity extends AppCompatActivity implements View.OnClickL
 
                         }
                     });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //Toast.makeText(getApplicationContext(), "You've changed your mind to delete all records", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.note_cancel, Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.show();
