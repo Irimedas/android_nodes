@@ -52,14 +52,14 @@ public class NotesListActivity extends AppCompatActivity {
                 final EditText edtText = new EditText(v.getContext());
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Prompt dialog demo !");
-                builder.setMessage("What is your name?");
+                builder.setTitle(R.string.note_add_title);
+                builder.setMessage(R.string.note_add_message);
                 builder.setCancelable(false);
                 builder.setView(edtText);
-                builder.setPositiveButton("Prompt", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.note_add_accept, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(), "Hello " + edtText.getText() + " ! how are you?", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(), "Hello " + edtText.getText() + " ! how are you?", Toast.LENGTH_LONG).show();
                         //create Note
                         Notes newNote= new Notes(edtText.getText().toString(),null);
                         //edit Note
@@ -68,10 +68,10 @@ public class NotesListActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(), "You've changed your mind to delete all records", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.note_cancel, Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.show();
@@ -142,7 +142,7 @@ public class NotesListActivity extends AppCompatActivity {
                         notesListAdapter.setClickListener(new NotesListAdapter.ItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Toast.makeText(getApplicationContext(), "You clicked " + notesListAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), "You clicked " + notesListAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
 
                                 intent = new Intent(getApplicationContext(), NoteViewActivity.class);
                                 intent.putExtra("note", notesListAdapter.getItem(position));

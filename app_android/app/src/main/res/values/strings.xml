@@ -17,4 +17,7 @@
     <string name="yes">Yes</string>
     <string name="no">no</string>
     <string name="note_cancel">This note is not update</string>
+    <string name="note_add_title">Add new Note</string>
+    <string name="note_add_message">Write the title of the note</string>
+    <string name="note_add_accept">Add</string>
 </resources>
