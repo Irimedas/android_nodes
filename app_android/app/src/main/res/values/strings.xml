@@ -20,4 +20,5 @@
     <string name="note_add_title">Add new Note</string>
     <string name="note_add_message">Write the title of the note</string>
     <string name="note_add_accept">Add</string>
+    <string name="note_share_title">Share this note</string>
 </resources>
