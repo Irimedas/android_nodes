@@ -3,8 +3,6 @@ package com.irimedas.notifyme.controller;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -13,16 +11,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.firestore.QuerySnapshot;
 import com.irimedas.notifyme.R;
-import com.irimedas.notifyme.firebase.Auth;
 import com.irimedas.notifyme.firebase.Database;
 import com.irimedas.notifyme.models.Notes;
 import com.irimedas.notifyme.models.Users;
 
-public class NoteShowActivity extends AppCompatActivity implements View.OnClickListener {
+public class NoteViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Notes note;
     private TextView tvTitle;
@@ -35,7 +31,7 @@ public class NoteShowActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.note_show);
+        setContentView(R.layout.note_view);
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.tb_notes);
         setSupportActionBar(toolbar);*/
        //buttons
@@ -115,7 +111,7 @@ public class NoteShowActivity extends AppCompatActivity implements View.OnClickL
                                         Database.setCollection("Notes");
                                         note.shareNote(user.getId());
                                     }else{
-                                        Toast.makeText(NoteShowActivity.this,R.string.invalid_username, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(NoteViewActivity.this,R.string.invalid_username, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
