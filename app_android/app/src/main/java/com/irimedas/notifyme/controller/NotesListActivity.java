@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,8 +27,6 @@ import com.irimedas.notifyme.models.Notes;
 import com.irimedas.notifyme.models.Users;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class NotesListActivity extends AppCompatActivity {
 
@@ -148,7 +144,7 @@ public class NotesListActivity extends AppCompatActivity {
                             public void onItemClick(View view, int position) {
                                 Toast.makeText(getApplicationContext(), "You clicked " + notesListAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
 
-                                intent = new Intent(getApplicationContext(), NoteShowActivity.class);
+                                intent = new Intent(getApplicationContext(), NoteViewActivity.class);
                                 intent.putExtra("note", notesListAdapter.getItem(position));
                                 startActivity(intent);
                             }
