@@ -25,7 +25,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:textAlignment="inherit"
                 app:srcCompat="?android:attr/textCheckMark" />
 
             <ImageButton
@@ -34,7 +33,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:textAlignment="inherit"
                 app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
         </LinearLayout>
@@ -70,6 +68,7 @@
             android:text="@string/note_Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@android:color/white"
+            android:textAlignment="inherit"
             app:fontFamily="sans-serif-medium" />
 
         <androidx.cardview.widget.CardView
@@ -98,6 +97,7 @@
                     android:text="@string/note_Body"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/grey_80"
+                    android:textAlignment="inherit"
                     android:visibility="visible" />
 
             </LinearLayout>

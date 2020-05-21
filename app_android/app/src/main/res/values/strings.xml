@@ -13,4 +13,5 @@
     <string name="note_Title">Title of note</string>
     <string name="note_Body">This is the contain of note</string>
     <string name="note_delete_title">Remove Note</string>
+    <string name="note_delete_message">You want remove this note?</string>
 </resources>
