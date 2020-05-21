@@ -63,7 +63,7 @@ public class NoteEditActivity extends AppCompatActivity implements View.OnClickL
                     String titleNote = tvTitle.getText().toString();
                     String bodyNote = tvBody.getText().toString();
                     String idUser = MainActivity.user.getUid();
-                    Toast.makeText(getApplicationContext(), titleNote+"\n"+bodyNote+"\n"+idNote+"\n"+idUser, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), titleNote+"\n"+bodyNote+"\n"+idNote+"\n"+idUser, Toast.LENGTH_SHORT).show();
                     //boolean found Duplicates
                     Boolean exist=false;
                     List<String> listNotes = NotesListAdapter.readtoPreferent();
@@ -119,10 +119,11 @@ public class NoteEditActivity extends AppCompatActivity implements View.OnClickL
                         }
                     });*/
                     //count match
+                    this.finish();
                     startActivity(intent);
                     break;
                 case R.id.ib_cancelNote:
-
+                    this.finish();
                     startActivity(intent);
                     break;
                 default:
