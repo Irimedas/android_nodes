@@ -42,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="Titulo de la nota"
+                        android:text="@string/note_Title"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:textColor="@color/grey_90" />
 
@@ -50,7 +50,7 @@
                         android:id="@+id/tvBody"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Descripción de la nota" />
+                        android:text="@string/note_Body" />
 
                 </LinearLayout>
 

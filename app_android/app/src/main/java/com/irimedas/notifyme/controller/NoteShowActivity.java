@@ -101,7 +101,7 @@ public class NoteShowActivity extends AppCompatActivity implements View.OnClickL
                     builder.setPositiveButton("Prompt", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Hello " + edtText.getText() + " ! how are you?", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getApplicationContext(), "Hello " + edtText.getText() + " ! how are you?", Toast.LENGTH_LONG).show();
                             //Share
                             // find user with email
                             Users findUser = new Users();
@@ -109,9 +109,13 @@ public class NoteShowActivity extends AppCompatActivity implements View.OnClickL
                             findUser.readData(new Database.FirestoreCallback(){
                                 @Override
                                 public void onCallback(QuerySnapshot documents) {
-                                    final Users user = documents.getDocuments().get(0).toObject(Users.class);
-                                    Database.setCollection("Notes");
-                                    note.shareNote(user.getId());
+                                    if(documents.getDocuments().size()>0) {
+                                        final Users user = documents.getDocuments().get(0).toObject(Users.class);
+                                        Database.setCollection("Notes");
+                                        note.shareNote(user.getId());
+                                    }else{
+                                        Toast.makeText(NoteShowActivity.this,R.string.invalid_username, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
 
@@ -120,7 +124,7 @@ public class NoteShowActivity extends AppCompatActivity implements View.OnClickL
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "You've changed your mind to delete all records", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "You've changed your mind to delete all records", Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.show();

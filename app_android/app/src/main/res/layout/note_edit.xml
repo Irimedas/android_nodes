@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
+                android:textAlignment="inherit"
                 app:srcCompat="?android:attr/textCheckMark" />
 
             <ImageButton
@@ -33,6 +34,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
+                android:textAlignment="inherit"
                 app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
         </LinearLayout>
@@ -65,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_large"
-            android:text="Esto es el titulo de la nota"
+            android:text="@string/note_Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@android:color/white"
             app:fontFamily="sans-serif-medium" />
@@ -93,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/spacing_medium"
-                    android:text="Esto es la descripción de la nota"
+                    android:text="@string/note_Body"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/grey_80"
                     android:visibility="visible" />
