@@ -69,13 +69,13 @@ public class NoteShowActivity extends AppCompatActivity implements View.OnClickL
                     break;
                 case R.id.ib_deleteNote:
 
-                    builder.setTitle("Confirm dialog demo !");
-                    builder.setMessage("You are about to delete all records of database. Do you really want to proceed ?");
+                    builder.setTitle(R.string.note_delete_title);
+                    builder.setMessage(R.string.note_delete_message);
                     builder.setCancelable(false);
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "idnote "+note.getId(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "idnote "+note.getId(), Toast.LENGTH_SHORT).show();
                             Database.editId(note.getId());
                             note.remove();
                             intent = new Intent(getApplicationContext(),NotesListActivity.class);
@@ -83,10 +83,11 @@ public class NoteShowActivity extends AppCompatActivity implements View.OnClickL
                         }
                     });
 
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "You've changed your mind to delete all records", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.note_cancel, Toast.LENGTH_SHORT).show();
+
                         }
                     });
 

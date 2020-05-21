@@ -14,4 +14,7 @@
     <string name="note_Body">This is the contain of note</string>
     <string name="note_delete_title">Remove Note</string>
     <string name="note_delete_message">You want remove this note?</string>
+    <string name="yes">Yes</string>
+    <string name="no">no</string>
+    <string name="note_cancel">This note is not update</string>
 </resources>

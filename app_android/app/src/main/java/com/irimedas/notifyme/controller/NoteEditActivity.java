@@ -53,6 +53,7 @@ public class NoteEditActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         if(v!=null){
             int id = v.getId();
+            Intent intent = new Intent(getApplicationContext(), NotesListActivity.class);
             switch (id){
                 case R.id.ib_checkNote:
 
@@ -67,9 +68,9 @@ public class NoteEditActivity extends AppCompatActivity implements View.OnClickL
                     Boolean exist=false;
                     List<String> listNotes = NotesListAdapter.readtoPreferent();
                     for (String element: listNotes) {
-                        Toast.makeText(getApplicationContext(), "test=> "+element+ "\n"+idNote, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "test=> "+element+ "\n"+idNote, Toast.LENGTH_SHORT).show();
                         if(element.equalsIgnoreCase(idNote)){
-                            Toast.makeText(getApplicationContext(), "Find "+element, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Find "+element, Toast.LENGTH_SHORT).show();
                             // if exist create newNote
                          exist=true;
                         }
@@ -118,10 +119,11 @@ public class NoteEditActivity extends AppCompatActivity implements View.OnClickL
                         }
                     });*/
                     //count match
-                    Intent intent = new Intent(getApplicationContext(), NotesListActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.ib_cancelNote:
+
+                    startActivity(intent);
                     break;
                 default:
                     break;
