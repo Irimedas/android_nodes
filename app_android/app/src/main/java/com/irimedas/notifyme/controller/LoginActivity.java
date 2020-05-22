@@ -48,11 +48,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     //startActivity(new Intent(this, MainActivity.class));
                     break;
                 case R.id.tv_sign_up:
-                    Toast.makeText(getApplicationContext(), "TEST:\nemail="+email+"\npassword="+password, Toast.LENGTH_SHORT).show();
+                    ///Toast.makeText(getApplicationContext(), "TEST:\nemail="+email+"\npassword="+password, Toast.LENGTH_SHORT).show();
                     Auth newAuth = new Auth(email,password,this);
                     newAuth.createAccount();
                 default:
-                    Toast.makeText(getApplicationContext(),"ERROR",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"ERROR",Toast.LENGTH_LONG).show();
                     break;
             }
         }

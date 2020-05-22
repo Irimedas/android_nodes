@@ -26,6 +26,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
+                android:backgroundTint="@color/blue_grey_300"
                 app:srcCompat="@drawable/ic_edit_note" />
 
             <ImageButton
@@ -35,6 +36,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
+                android:backgroundTint="@color/blue_grey_300"
                 app:srcCompat="@drawable/ic_share_note" />
 
             <ImageButton

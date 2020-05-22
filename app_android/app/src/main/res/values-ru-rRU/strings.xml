@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="email">Электронное письмо</string>
+    <string name="password">пароль</string>
+    <string name="signIn">войти в систему</string>
+    <string name="login">Авторизоваться</string>
+    <string name="invalid_username">Неверное имя пользователя</string>
+    <string name="invalid_password">Пароль должен быть> 5 символов</string>
+    <string name="login_failed">Ошибка входа</string>
+    <string name="btn_logout">Выйти</string>
+    <string name="note_edit">Редактировать заметку</string>
+    <string name="newUser">Новый пользователь?</string>
+    <string name="note_Title">Название заметки</string>
+    <string name="note_Body">Это содержание примечания</string>
+    <string name="note_delete_title">Удалить заметку</string>
+    <string name="note_delete_message">Вы хотите удалить эту заметку?</string>
+    <string name="yes">да</string>
+    <string name="no">нет</string>
+    <string name="note_cancel">Изменений не было</string>
+    <string name="note_add_title">Добавить новую заметку</string>
+    <string name="note_add_message">Напишите название заметки</string>
+    <string name="note_add_accept">Добавить</string>
+    <string name="note_share_title">Поделиться этой запиской</string>
+    <string name="note_share_message">Напишите письмо, с которым вы хотите поделиться этой запиской</string>
+</resources>
