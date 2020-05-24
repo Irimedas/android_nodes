@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">notifyme</string>
+    <string name="app_name" translatable="false">Just Note</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signIn">Sign in</string>
+    <string name="login">Login</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="btn_logout">Logout</string>
+    <string name="note_edit">Edit Note</string>
+    <string name="newUser">New User?</string>
+    <string name="note_Title">Title of note</string>
+    <string name="note_Body">This is the contain of note</string>
+    <string name="note_delete_title">Remove Note</string>
+    <string name="note_delete_message">You want remove this note?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="note_cancel">No changes have been made</string>
+    <string name="note_add_title">Add new Note</string>
+    <string name="note_add_message">Write the title of the note</string>
+    <string name="note_add_accept">Add</string>
+    <string name="note_share_title">Share this note</string>
+    <string name="note_share_message">Write the email with whom you want to share this note</string>
+    <string name="user">user</string>
+    <string name="note">note</string>
+    <string name="removed">is removed</string>
+    <string name="removed_fail">is not removed</string>
 </resources>
