@@ -176,7 +176,6 @@ public class Auth extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 android.os.Process.killProcess(android.os.Process.myPid());//<-- this line is black Mage!!! Why???!! Holy shit!!!
                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
