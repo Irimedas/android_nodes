@@ -49,26 +49,22 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvEmail = itemView.findViewById(R.id.tvEmail);
-            tvShare_notes= itemView.findViewById(R.id.tvShare_notes);
-            tvUser_notes= itemView.findViewById(R.id.tvUser_notes);
+            tvShare_notes = itemView.findViewById(R.id.tvShare_notes);
+            tvUser_notes = itemView.findViewById(R.id.tvUser_notes);
             //posem el listener en cada element passat per parametre
             itemView.setOnClickListener(this);
         }
+
         //metode a implemantar la interficiea View.onclickListener
         @Override
         public void onClick(View v) {
             int positcio = getAdapterPosition();
-            Log.i("test",String.valueOf(positcio));
+            Log.i("test", String.valueOf(positcio));
             // seleciona el usuari
-            Users user= list.get(positcio);
-            // agafa totes les notes del usuari
-            Notes allnotes = new  Notes();
-           // allnotes.in("id",user.getUser_notes());
-            //allnotes.all();
-           // allnotes.get();
-            //mostraPopapMenu(v,positcio);
+            Users user = list.get(positcio);
         }
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // infla la vista amb el layout del pare
@@ -84,24 +80,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         Users item = list.get(position);
-        if(item!=null){
-        String llistShare_notes="";
-       /* if(item.getShare_notes()!=null) {
-            for (String element : item.getShare_notes()) {
-                llistShare_notes += element + " ";
-            }
-        }
-        String llistUser_notes="";
-        if(item.getUser_notes()!=null) {
-            for (String element : item.getUser_notes()) {
-                llistUser_notes += element + " ";
-            }
-        }*/
-        holder.tvName.setText(item.getName());
-        holder.tvEmail.setText(item.getEmail());
-        holder.tvShare_notes.setText(llistShare_notes);
-      //  holder.tvUser_notes.setText(llistUser_notes);
-        }else {
+        if (item != null) {
+            String llistShare_notes = "";
+            holder.tvName.setText(item.getName());
+            holder.tvEmail.setText(item.getEmail());
+            holder.tvShare_notes.setText(llistShare_notes);
+        } else {
             holder.tvName.setText("null");
             holder.tvEmail.setText("null");
             holder.tvShare_notes.setText("null");

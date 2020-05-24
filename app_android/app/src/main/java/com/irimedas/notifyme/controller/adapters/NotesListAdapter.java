@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.ViewHolder> {
-    static public  List<Notes> notes;
+    static public List<Notes> notes;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
@@ -43,12 +43,12 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
         String body = notes.get(position).getBody();
         String newBody = "";
 
-        if(body.length() >= 50){
+        if (body.length() >= 50) {
             newBody = body.substring(0, 50);
             newBody += "...";
 
-        }else{
-            newBody =  body;
+        } else {
+            newBody = body;
         }
 
         holder.tvTitle.setText(title);
@@ -96,12 +96,12 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
     }
 
     //send List notes in sharepreference
-    public void sendtoPreference(){
+    public void sendtoPreference() {
         SharedPreferences mPrefs = MainActivity.context.getSharedPreferences("Notes", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
 
         ArrayList<String> data = new ArrayList<>();
-        for (Notes element: notes) {
+        for (Notes element : notes) {
             data.add(element.getId());
         }
 
@@ -109,8 +109,9 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
         prefsEditor.putString("Note", json);
         prefsEditor.commit();
     }
+
     //read sharepreference
-    public static List<String> readtoPreferent(){
+    public static List<String> readtoPreferent() {
         SharedPreferences mPrefs = MainActivity.context.getSharedPreferences("Notes", Context.MODE_PRIVATE);
         String json = mPrefs.getString("Note", null);
         if (json != null) {

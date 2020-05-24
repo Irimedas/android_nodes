@@ -11,7 +11,7 @@ import com.irimedas.notifyme.firebase.Database;
 
 import java.util.List;
 
-public class Users extends Database  {
+public class Users extends Database {
 
     //atribute
     private static String TABLE = "Users";
@@ -25,14 +25,15 @@ public class Users extends Database  {
     private Context context = MainActivity.context;
     private RecyclerView view = MainActivity.View;
 
-    public Users(){
+    public Users() {
         super();
         setCollection(TABLE);
-    };
+    }
 
     public Users(String id, String name, String email) {
         super();
         setCollection(TABLE);
+        setPk(id);
         this.id = id;
         this.name = name;
         this.email = email;
@@ -40,50 +41,24 @@ public class Users extends Database  {
         this.token = null;
     }
 
-/*
-    public void get(){
-        getQuery().get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            adapter= new UsersAdapter(task.getResult(),context);
-                            RecyclerView usersView = view;
-                            usersView.setAdapter(adapter);
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Users result = document.toObject(Users.class);
-                                result.show();
-                                Log.d("test", document.getId() + " => " + document.getData());
-
-                                //guardar el documenten en un arraylist  de QueryDocumentSnapshot
-                                //passar el arraylist al adapters corresponent
-
-                            }
-                        } else {
-                            Log.d("test", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-    }*/
-
-
-    public void show(){
-        Toast.makeText(MainActivity.context,"User id: "+getId()+
-                        "\nUser name: "+this.getName()+
-                        "\nUser email: "+this.getEmail()+
-                        "\nUser role: "+this.getRole()+
-                        "\nUser Token: "+this.getToken()
-
-                ,Toast.LENGTH_LONG).show();
+    public void show() {
+        Toast.makeText(MainActivity.context, "User id: " + getId() +
+                        "\nUser name: " + this.getName() +
+                        "\nUser email: " + this.getEmail() +
+                        "\nUser role: " + this.getRole() +
+                        "\nUser Token: " + this.getToken()
+                , Toast.LENGTH_LONG).show();
     }
+
     //Getters && Setters
-    public String getId(){
+    public String getId() {
         return this.id;
     }
-    public void setId(String id){
+
+    public void setId(String id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }

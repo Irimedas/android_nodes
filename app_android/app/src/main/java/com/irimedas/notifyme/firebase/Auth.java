@@ -62,7 +62,7 @@ public class Auth extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             String userID = user.getUid();
@@ -70,16 +70,16 @@ public class Auth extends Activity {
                             String userEmail = email;
                             Users newUser = new Users(userID, userName, userEmail);
                             newUser.save();
-                            //updateUI(user);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(activity.getApplicationContext(), "Create Count Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
+
                         }
                         goTohome();
-                        // ...
+
                     }
                 });
     }
@@ -104,31 +104,17 @@ public class Auth extends Activity {
                                 sendtoPreferents(user, password);
                                 goTohome();
 
-//                                startActivity(new Intent(MainActivity.context, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                               // finish();
-                                //startActivity(new Intent(MainActivity.context, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                //goTohome(user);
-                                //Toast.makeText(activity.getApplicationContext(), "TEST:\nemail="+email+"\npassword="+password+"\nloaded="+loaded, Toast.LENGTH_SHORT).show();
-                                //   updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(activity.getApplicationContext(), "SingIn Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                                // updateUI(null);
-                                // Fragment fragment_login = new LoginFragment();
+
                             }
-
-                            // ...
-
-
                         }
 
                     });
         }
-//        else {
-//            singout();
-//        }
     }
 
     /**
@@ -137,21 +123,6 @@ public class Auth extends Activity {
     public FirebaseUser getCurrentUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return user;
-        /*if (user != null) {
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
-
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
-            String uid = user.getUid();
-
-        }*/
     }
 
     public void singout() {

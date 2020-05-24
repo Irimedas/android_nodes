@@ -32,16 +32,13 @@ public class NoteViewActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_view);
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.tb_notes);
-        setSupportActionBar(toolbar);*/
-       //buttons
-       ib_editNote = findViewById(R.id.ib_editNote);
-       ib_editNote.setOnClickListener(this);
-       ib_ShareNote = findViewById(R.id.ib_shareNote);
-       ib_ShareNote.setOnClickListener(this);
-       ib_deleteNote = findViewById(R.id.ib_deleteNote);
-       ib_deleteNote.setOnClickListener(this);
-
+        //buttons
+        ib_editNote = findViewById(R.id.ib_editNote);
+        ib_editNote.setOnClickListener(this);
+        ib_ShareNote = findViewById(R.id.ib_shareNote);
+        ib_ShareNote.setOnClickListener(this);
+        ib_deleteNote = findViewById(R.id.ib_deleteNote);
+        ib_deleteNote.setOnClickListener(this);
 
         note = (Notes) getIntent().getSerializableExtra("note");
 
@@ -54,10 +51,10 @@ public class NoteViewActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if(v!=null){
+        if (v != null) {
             int id = v.getId();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            switch (id){
+            switch (id) {
                 case R.id.ib_editNote:
                     intent = new Intent(getApplicationContext(), NoteEditActivity.class);
                     intent.putExtra("note", note);
@@ -72,9 +69,9 @@ public class NoteViewActivity extends AppCompatActivity implements View.OnClickL
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 //                            Toast.makeText(getApplicationContext(), "idnote "+note.getId(), Toast.LENGTH_SHORT).show();
-                            Database.editId(note.getId());
+                            Database.setPk(note.getId());
                             note.remove();
-                            intent = new Intent(getApplicationContext(),NotesListActivity.class);
+                            intent = new Intent(getApplicationContext(), NotesListActivity.class);
                             startActivity(intent);
                         }
                     });
@@ -98,20 +95,19 @@ public class NoteViewActivity extends AppCompatActivity implements View.OnClickL
                     builder.setPositiveButton(R.string.note_add_accept, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                           // Toast.makeText(getApplicationContext(), "Hello " + edtText.getText() + " ! how are you?", Toast.LENGTH_LONG).show();
                             //Share
                             // find user with email
                             Users findUser = new Users();
-                            findUser.where("email","=",edtText.getText().toString());
-                            findUser.readData(new Database.FirestoreCallback(){
+                            findUser.where("email", "=", edtText.getText().toString());
+                            findUser.readData(new Database.FirestoreCallback() {
                                 @Override
                                 public void onCallback(QuerySnapshot documents) {
-                                    if(documents.getDocuments().size()>0) {
+                                    if (documents.getDocuments().size() > 0) {
                                         final Users user = documents.getDocuments().get(0).toObject(Users.class);
                                         Database.setCollection("Notes");
                                         note.shareNote(user.getId());
-                                    }else{
-                                        Toast.makeText(NoteViewActivity.this,R.string.invalid_username, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(NoteViewActivity.this, R.string.invalid_username, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -131,25 +127,5 @@ public class NoteViewActivity extends AppCompatActivity implements View.OnClickL
             }
         }
     }
-  /*  @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_notes, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case R.id.ib_editNote:
-                intent = new Intent(getApplicationContext(), NoteEditActivity.class);
-                intent.putExtra("note", note);
-                startActivity(intent);
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
 }

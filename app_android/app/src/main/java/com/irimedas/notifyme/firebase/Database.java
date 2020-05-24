@@ -12,9 +12,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.irimedas.notifyme.R;
 import com.irimedas.notifyme.controller.MainActivity;
 
-import java.util.List;
 import java.util.Map;
 
 
@@ -27,7 +27,7 @@ public class Database {
     //attributes of model
     private static String collection;
     private static Query query;
-    private static String id;
+    private static String pk;
 
 
     public Database() {
@@ -35,39 +35,49 @@ public class Database {
     }
 
     //CRUD
-    public void save(){
-        db.collection(collection).document(id).set(this);
+    public void save() {
+        db.collection(collection).document(pk).set(this);
     }
 
-    public void update( String id, Map<String,Object> data){
+    public void update(String id, Map<String, Object> data) {
         db.collection(collection).document(id).update(data);
     }
-    public void remove(){
-        db.collection(collection).document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+
+    public void remove() {
+        db.collection(collection).document(pk).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(MainActivity.context,"User delete",Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(MainActivity.context,"User delete Fail",Toast.LENGTH_LONG).show();
+                if (task.isSuccessful()) {
+                    Toast.makeText(MainActivity.context, R.string.removed, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MainActivity.context,R.string.removed_fail, Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
-    public String generateId(){
+    public String generateId() {
         return db.collection(collection).document().getId();
     }
 
     ///Queries
+    /**
+     * Method that create a query of find element by id
+     * @param id String contain the id from element that is find
+     * */
     public void find(String id) {
 
-        where("id","=",id);
-    }
-    public void all(){
-        query = db.collection(collection);
+        where("id", "=", id);
     }
 
+    public void all() {
+        query = db.collection(collection);
+    }
+    /**
+     * Method that create a query of filter result where object accomplish conditions
+     * @param  field String this is field in search
+     * @param  condition String this is the condition accomplish, accept ( =, >, >=, <, <= )
+     * */
     public void where(String field, String condition, String value) {
         CollectionReference collectionReference = db.collection(collection);
 
@@ -95,17 +105,26 @@ public class Database {
                 break;
         }
     }
-    public void in (String field, String value){
+    /**
+     * Method that create a query of filter result if value is in to array field
+     * @param field String name from field to search, is required that this is array
+     * @param value String name from the value to search
+     * */
+    public void in(String field, String value) {
         CollectionReference collectionReference = db.collection(collection);
         query = collectionReference.whereArrayContains(field, value);
     }
 
     //exectuion queries
-
-    public interface FirestoreCallback{
+    //Interface from need call to method readData
+    public interface FirestoreCallback {
         void onCallback(QuerySnapshot documents);
     }
-    public void readData(final FirestoreCallback firestoreCallback){
+
+    /**
+     * Method that is use from read data from the dataabase Firestone
+     * */
+    public void readData(final FirestoreCallback firestoreCallback) {
 
         query.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -141,11 +160,11 @@ public class Database {
         Database.query = query;
     }
 
-    public static String showId() {
-        return Database.id;
+    public static String getPk() {
+        return Database.pk;
     }
 
-    public static void editId(String id) {
-        Database.id = id;
+    public static void setPk(String id) {
+        Database.pk = id;
     }
 }

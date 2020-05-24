@@ -22,4 +22,8 @@
     <string name="note_add_accept">Add</string>
     <string name="note_share_title">Share this note</string>
     <string name="note_share_message">Write the email with whom you want to share this note</string>
+    <string name="user">user</string>
+    <string name="note">note</string>
+    <string name="removed">is removed</string>
+    <string name="removed_fail">is not removed</string>
 </resources>

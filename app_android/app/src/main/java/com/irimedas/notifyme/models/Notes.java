@@ -1,6 +1,7 @@
 package com.irimedas.notifyme.models;
 
 import android.widget.Toast;
+
 import com.irimedas.notifyme.controller.MainActivity;
 import com.irimedas.notifyme.firebase.Database;
 
@@ -31,25 +32,27 @@ public class Notes extends Database implements Serializable {
         this.id = generateId();
         this.title = title;
         this.body = body;
-        this.note_files=null;
-        this.users_ids=null;
+        this.note_files = null;
+        this.users_ids = null;
     }
 
-    public void show(){
-        Toast.makeText(MainActivity.context,"Note id: "+getId()+
-                        "\nNote Title: "+this.getTitle()+
-                        "\nNote Body: "+this.getBody()+
-                        "\nNote Files "+this.getNote_files()
-                ,Toast.LENGTH_LONG).show();
+    public void show() {
+        Toast.makeText(MainActivity.context, "Note id: " + getId() +
+                        "\nNote Title: " + this.getTitle() +
+                        "\nNote Body: " + this.getBody() +
+                        "\nNote Files " + this.getNote_files()
+                , Toast.LENGTH_LONG).show();
     }
+
     /**
      * Method of create new notes and link with User
+     *
      * @param userId String Value of ID's Users Owner
-     * @param title String Value of Title's note
-     * @param body String Value of Body's note
-     * */
-    public void createNote(String userId,String title,String body){
-        Notes newNote = new Notes(title,body);
+     * @param title  String Value of Title's note
+     * @param body   String Value of Body's note
+     */
+    public void createNote(String userId, String title, String body) {
+        Notes newNote = new Notes(title, body);
         List<String> idList = new ArrayList<>();
         idList.add(userId);
         newNote.setUsers_ids(idList);
@@ -57,50 +60,54 @@ public class Notes extends Database implements Serializable {
     }
 
 
-
     /**
      * Method of share with one note
+     *
      * @param shareUserId String Value of ID's User target
-     * */
-    public void shareNote(String shareUserId){
+     */
+    public void shareNote(String shareUserId) {
 
-        List<String>users_ids = this.getUsers_ids();
+        List<String> users_ids = this.getUsers_ids();
         /// if not exist shareUserId in users_ids
-        if(!(users_ids.contains(shareUserId))){
+        if (!(users_ids.contains(shareUserId))) {
             users_ids.add(shareUserId);
             this.setUsers_ids(users_ids);
-            Map<String,Object> data = new HashMap<>();
-            data.put("users_ids",users_ids);
-            this.update(getId(),data);
+            Map<String, Object> data = new HashMap<>();
+            data.put("users_ids", users_ids);
+            this.update(getId(), data);
         }
     }
+
     /**
      * Method of remove the share with one note
+     *
      * @param shareUserId String Value of ID's User target
-     * */
-    public void decomposeShareNote(String shareUserId){
+     */
+    public void decomposeShareNote(String shareUserId) {
 
-        List<String>users_ids = this.getUsers_ids();
+        List<String> users_ids = this.getUsers_ids();
         /// if exist shareUserId in users_ids
-        if(users_ids.contains(shareUserId)){
+        if (users_ids.contains(shareUserId)) {
             users_ids.remove(shareUserId);
             this.setUsers_ids(users_ids);
-            Map<String,Object> data = new HashMap<>();
-            data.put("users_ids",users_ids);
-            this.update(getId(),data);
+            Map<String, Object> data = new HashMap<>();
+            data.put("users_ids", users_ids);
+            this.update(getId(), data);
         }
     }
 
     //getters && setters
-    public String getId(){
+    public String getId() {
         //return showId();
         return this.id;
     }
-    public void setId(String id){
+
+    public void setId(String id) {
 
 //        editId(id);
-        this.id= id;
+        this.id = id;
     }
+
     public String getTitle() {
         return title;
     }

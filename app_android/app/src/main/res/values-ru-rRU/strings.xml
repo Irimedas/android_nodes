@@ -22,4 +22,8 @@
     <string name="note_add_accept">Добавить</string>
     <string name="note_share_title">Поделиться этой запиской</string>
     <string name="note_share_message">Напишите письмо, с которым вы хотите поделиться этой запиской</string>
+    <string name="removed">устранен</string>
+    <string name="user">пользователь</string>
+    <string name="removed_fail">не удаляется</string>
+    <string name="note">нота</string>
 </resources>
