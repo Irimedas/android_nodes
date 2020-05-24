@@ -88,7 +88,7 @@ public class Auth extends Activity {
      * Sing IN
      */
     public void singIn() {
-        if (email != null && password != null) {
+        if ((email != null && email.length()!=0) && (password != null && password.length()!=0)) {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                         @Override
